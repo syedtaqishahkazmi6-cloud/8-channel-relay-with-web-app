@@ -1,6 +1,103 @@
-body { background: #0f172a; color: white; font-family: sans-serif; text-align: center; }
-.container { padding: 20px; max-width: 500px; margin: auto; }
-.relay-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
-.card { background: #1e293b; padding: 20px; border-radius: 12px; border: 1px solid #334155; }
-.toggle-btn { background: #38bdf8; border: none; padding: 12px; border-radius: 8px; width: 100%; font-weight: bold; cursor: pointer; }
-.conn-btn { background: #a855f7; color: white; border: none; padding: 10px; border-radius: 5px; margin-bottom: 10px; }
+:root {
+    --bg-dark: #0f172a;
+    --card-bg: #1e293b;
+    --accent-bt: #a855f7;
+    --accent-wifi: #0ea5e9;
+    --text-main: #f8fafc;
+    --danger: #ef4444;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 450px;
+    padding: 20px;
+}
+
+.connection-panel {
+    background: var(--card-bg);
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.button-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.conn-btn {
+    flex: 1;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.bt { background-color: var(--accent-bt); }
+.wifi { background-color: var(--accent-wifi); }
+
+#ipAddress {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #334155;
+    background: #0f172a;
+    color: #38bdf8;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.relay-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.relay-card {
+    background: var(--card-bg);
+    padding: 15px;
+    border-radius: 15px;
+    text-align: center;
+    border: 1px solid #334155;
+}
+
+.toggle-btn {
+    background: #334155;
+    color: white;
+    border: 2px solid #38bdf8;
+    padding: 10px 20px;
+    border-radius: 10px;
+    width: 100%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.toggle-btn:active {
+    background: #38bdf8;
+    transform: scale(0.95);
+}
+
+.master-off {
+    background: var(--danger);
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 15px;
+    border-radius: 12px;
+    margin-top: 25px;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
