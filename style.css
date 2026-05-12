@@ -12,62 +12,62 @@ body { background: var(--bg); color: white; font-family: sans-serif; height: 100
 .app-wrapper { display: flex; flex-direction: column; height: 100vh; }
 
 .hero-header {
-    height: 18vh;
+    height: 15vh; /* Reduced header to save space */
     background: linear-gradient(rgba(0,0,0,0.6), var(--bg)), url('https://images.unsplash.com/photo-1558467523-46113f1fef72?w=600');
     background-size: cover;
-    padding: 10px 15px;
+    padding: 8px 12px;
 }
 
 .header-content { display: flex; justify-content: space-between; align-items: center; }
 
 .master-off {
     background: #ff3b3b; color: white; border: 1px solid white;
-    padding: 8px 12px; border-radius: 5px; font-weight: bold; font-size: 11px;
+    padding: 6px 10px; border-radius: 4px; font-weight: bold; font-size: 10px;
 }
 
-.title-area h1 { font-size: 1rem; text-align: right; }
-.status-off { color: #ff3b3b; font-weight: bold; }
-.status-on { color: var(--neon-g); font-weight: bold; }
+.title-area h1 { font-size: 0.9rem; text-align: right; }
+.status-off { color: #ff3b3b; font-weight: bold; font-size: 9px; }
+.status-on { color: var(--neon-g); font-weight: bold; font-size: 9px; }
 
-.conn-bar { background: #16191f; padding: 5px 15px; display: flex; align-items: center; gap: 8px; }
-.c-btn { width: 34px; height: 34px; border-radius: 50%; border: 1px solid #444; background: none; color: white; }
-.clock { flex: 1; text-align: center; font-size: 10px; color: #888; }
+.conn-bar { background: #16191f; padding: 4px 12px; display: flex; align-items: center; gap: 6px; }
+.c-btn { width: 30px; height: 30px; border-radius: 50%; border: 1px solid #444; background: none; color: white; font-size: 12px; }
+.clock { flex: 1; text-align: center; font-size: 9px; color: #888; }
 
-/* Fixed Grid: 20% Smaller Clickable Areas */
+/* Fixed Grid: All buttons now fit on one screen */
 .control-grid {
     flex: 1;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(4, 1fr);
-    gap: 6px; /* Tightened gap */
+    gap: 5px; /* Minimum gap */
     padding: 8px;
+    height: 70vh; /* Controlled height */
 }
 
 .card {
     background: var(--card);
-    border: 1.5px solid #333;
-    border-radius: 8px;
+    border: 1px solid #333;
+    border-radius: 6px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    opacity: 0.5; /* Dim when OFF */
-    transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0.4; /* Dim when OFF */
+    transition: 0.15s ease-in-out;
 }
 
-.card svg { width: 22px; height: 22px; fill: #444; margin-bottom: 2px; }
-.card span { font-size: 8px; color: #666; text-transform: uppercase; font-weight: bold; }
-.card .atl { font-size: 12px; font-weight: bold; color: #444; }
+.card svg { width: 18px; height: 18px; fill: #555; margin-bottom: 2px; }
+.card span { font-size: 7px; color: #777; text-transform: uppercase; font-weight: bold; }
+.card .atl { font-size: 10px; font-weight: bold; color: #555; }
 
-/* Active States: High Brightness */
+/* Brightness Logic: ON state is high brightness */
 .card.on { 
-    opacity: 1; /* Bright when ON */
+    opacity: 1; 
     border-color: var(--neon-g); 
-    background: rgba(57, 255, 20, 0.05); 
-    box-shadow: 0 0 10px rgba(57, 255, 20, 0.1);
+    background: rgba(57, 255, 20, 0.08); 
 }
 
-.card.on svg { fill: var(--neon-g); filter: drop-shadow(0 0 4px var(--neon-g)); }
-.card.on[data-type="yellow"] { border-color: var(--neon-y); background: rgba(255, 234, 0, 0.05); }
-.card.on[data-type="yellow"] svg { fill: var(--neon-y); filter: drop-shadow(0 0 4px var(--neon-y)); }
+.card.on svg { fill: var(--neon-g); filter: drop-shadow(0 0 3px var(--neon-g)); }
+.card.on[data-type="yellow"] { border-color: var(--neon-y); background: rgba(255, 234, 0, 0.08); }
+.card.on[data-type="yellow"] svg { fill: var(--neon-y); filter: drop-shadow(0 0 3px var(--neon-y)); }
 .card.on span { color: white; }

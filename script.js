@@ -1,4 +1,5 @@
-const IP = "http://192.168.4.1"; // Your ESP32 IP
+const IP = "http://192.168.4.1"; 
+let hasAlerted = false;
 
 function updateStatus(online) {
     const s = document.getElementById('stat');
@@ -10,15 +11,17 @@ setInterval(() => {
     document.getElementById('clock').innerText = new Date().toLocaleTimeString();
 }, 1000);
 
-// WiFi Scanner with CORS Bypass
+// WiFi Fix: No-cors and silent error
 async function scanWiFi() {
-    updateStatus(false);
     try {
         await fetch(`${IP}/scan-wifi`, { mode: 'no-cors' });
         updateStatus(true);
-        alert("WiFi Request Sent. Hardware responding.");
     } catch (e) {
-        alert("SECURITY: Open Site Settings -> Allow Insecure Content.");
+        if (!hasAlerted) {
+            alert("SECURITY: Click the Lock Icon -> Site Settings -> Allow Insecure Content.");
+            hasAlerted = true;
+        }
+        updateStatus(false);
     }
 }
 
@@ -27,13 +30,10 @@ async function scanBluetooth() {
     try {
         const device = await navigator.bluetooth.requestDevice({ acceptAllDevices: true });
         updateStatus(true);
-        console.log("Connected to: " + device.name);
-    } catch (e) {
-        console.log("BLE cancelled or browser unsupported.");
-    }
+    } catch (e) { console.log("BLE Blocked"); }
 }
 
-// Relay Toggles
+// Compact Relay Toggle
 function toggle(id, el) {
     const state = el.classList.toggle('on') ? '1' : '0';
     fetch(`${IP}/relay?id=${id}&state=${state}`, { mode: 'no-cors' })
@@ -41,7 +41,6 @@ function toggle(id, el) {
         .catch(() => updateStatus(false));
 }
 
-// Master Kill Switch
 function allOff() {
     document.querySelectorAll('.card').forEach(c => c.classList.remove('on'));
     fetch(`${IP}/alloff`, { mode: 'no-cors' }).catch(() => updateStatus(false));
