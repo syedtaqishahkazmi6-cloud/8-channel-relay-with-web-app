@@ -1,5 +1,5 @@
 :root {
-    --bg: #1e2128;
+    --bg: #121417;
     --card-bg: #2d313a;
     --border: #4d525d;
     --neon-g: #39FF14;
@@ -9,11 +9,11 @@
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
 body {
-    background-color: #121417;
+    background-color: var(--bg);
     color: white;
-    font-family: sans-serif;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
     height: 100vh;
-    overflow: hidden; /* Prevent bouncing on mobile */
+    overflow: hidden;
 }
 
 .app-wrapper {
@@ -23,77 +23,78 @@ body {
 }
 
 .hero-header {
-    height: 25vh;
-    background: url('YOUR_IMAGE_URL') center/cover;
+    height: 20vh;
+    background: url('https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=600') center/cover;
     position: relative;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    align-items: flex-end;
     padding: 15px;
 }
 
-.overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(transparent, #1e2128); }
-
-.header-nav, .header-main, .header-icons { position: relative; z-index: 2; text-align: center; }
-.status-red { color: #ff3333; font-weight: bold; font-style: italic; }
+.overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(transparent, var(--bg)); }
+.header-main { position: relative; z-index: 2; width: 100%; text-align: center; }
+.status-text { color: #ff3333; font-weight: bold; transition: 0.3s; }
 
 .conn-bar {
-    background: #1e2128;
-    padding: 10px 15px;
+    background: #1a1c22;
+    padding: 12px 15px;
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
 }
 
 .c-btn {
-    width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border);
-    background: none; color: white; cursor: pointer;
+    width: 42px; height: 42px; border-radius: 50%; border: 1.5px solid var(--border);
+    background: none; color: white; cursor: pointer; transition: 0.3s;
 }
 
-.clock { flex: 1; border: 1px solid var(--border); padding: 5px; border-radius: 5px; font-size: 12px; text-align: center; }
+.clock { flex: 1; border: 1px solid var(--border); padding: 6px; border-radius: 6px; font-size: 11px; text-align: center; font-weight: bold; }
 
-/* Grid Fix */
+/* Grid of Cards */
 .control-grid {
     flex: 1;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr; /* 3 columns to match reference */
-    grid-template-rows: repeat(3, 1fr);
-    gap: 10px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(4, 1fr);
+    gap: 12px;
     padding: 15px;
 }
 
 .card {
     background: var(--card-bg);
     border: 2px solid var(--border);
-    border-radius: 12px;
+    border-radius: 15px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    transition: 0.3s;
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.card svg { width: 50%; fill: #666; transition: 0.3s; }
-.card .atl { color: #666; font-weight: bold; font-size: 1.2rem; }
+.card svg { width: 35px; height: 35px; fill: #666; transition: 0.3s; margin-bottom: 5px; }
+.card span { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #888; font-weight: bold; }
+.card .atl { color: #666; font-size: 18px; margin-bottom: 2px; }
 
-/* Glowing States */
-.card.on[data-type="green"] { border-color: var(--neon-g); box-shadow: 0 0 15px rgba(57,255,20,0.3); }
+/* Active Neon States */
+.card.on { border-color: var(--neon-g); box-shadow: 0 0 15px rgba(57,255,20,0.2); }
+.card.on span { color: white; }
+
 .card.on[data-type="green"] svg, .card.on[data-type="green"] .atl { fill: var(--neon-g); color: var(--neon-g); filter: drop-shadow(0 0 5px var(--neon-g)); }
-
-.card.on[data-type="yellow"] { border-color: var(--neon-y); box-shadow: 0 0 15px rgba(255,234,0,0.3); }
+.card.on[data-type="yellow"] { border-color: var(--neon-y); }
 .card.on[data-type="yellow"] svg { fill: var(--neon-y); filter: drop-shadow(0 0 5px var(--neon-y)); }
 
 /* Footer fix */
 .bottom-footer {
-    padding-bottom: 20px;
-    background: #1e2128;
+    padding: 15px 0 25px 0;
     display: flex;
     justify-content: center;
+    background: var(--bg);
 }
 
 .all-off-pill {
-    width: 160px; height: 45px; border-radius: 25px; border: 2px solid white;
-    display: flex; align-items: center; justify-content: space-between; padding: 0 5px 0 20px;
-    font-weight: bold; letter-spacing: 1px;
+    width: 180px; height: 48px; border-radius: 30px; border: 2px solid white;
+    display: flex; align-items: center; justify-content: space-between; padding: 0 6px 0 24px;
+    font-weight: 800; letter-spacing: 2px; cursor: pointer;
 }
 
-.toggle-circle { width: 35px; height: 35px; background: white; border-radius: 50%; }
+.toggle-circle { width: 36px; height: 36px; background: white; border-radius: 50%; }
