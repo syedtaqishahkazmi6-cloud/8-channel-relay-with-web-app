@@ -1,10 +1,11 @@
+// server.js
 import express from "express";
 import fetch from "node-fetch";
 
 const app = express();
-const IP = "https://my-esp32-proxy.vercel.app";
+const ESP32_IP = "http://192.168.4.1"; // ESP32 local IP
 
-// Proxy relay
+// Proxy relay toggle
 app.get("/relay", async (req, res) => {
   const { id, state } = req.query;
   try {
