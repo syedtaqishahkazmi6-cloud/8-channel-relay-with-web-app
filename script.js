@@ -1,49 +1,46 @@
-const ESP_IP = "http://192.168.4.1"; // Change to your ESP IP if needed
+const IP = "http://192.168.4.1"; // Your ESP32 IP
 
-function updateStatus(isOnline) {
-    const stat = document.getElementById('conn-stat');
-    if(isOnline) {
-        stat.innerText = "ONLINE";
-        stat.className = "status-on";
-    } else {
-        stat.innerText = "OFFLINE";
-        stat.className = "status-off";
-    }
+function updateStatus(online) {
+    const s = document.getElementById('stat');
+    s.innerHTML = online ? 'Status: <span class="status-on">ONLINE</span>' : 'Status: <span class="status-off">OFFLINE</span>';
 }
 
-// Timer
+// Clock
 setInterval(() => {
     document.getElementById('clock').innerText = new Date().toLocaleTimeString();
 }, 1000);
 
+// WiFi Scanner with Error Handling
 async function scanWiFi() {
     try {
-        const response = await fetch(`${ESP_IP}/scan-wifi`);
-        if(response.ok) {
-            updateStatus(true);
-            alert("ESP32 Found!");
-        }
+        const r = await fetch(`${IP}/scan-wifi`, { mode: 'no-cors' });
+        updateStatus(true);
+        alert("WiFi Request Sent to Hardware.");
     } catch (e) {
         updateStatus(false);
-        alert("SECURITY BLOCK: Since you are on GitHub (HTTPS), you must allow 'Insecure Content' in site settings to talk to ESP32 (HTTP).");
+        alert("WiFi Fail: 1. Connect to ESP32 WiFi. 2. Enable 'Insecure Content' in Site Settings.");
     }
 }
 
-function toggle(id, el) {
-    const state = el.classList.toggle('on') ? '1' : '0';
-    fetch(`${ESP_IP}/relay?id=${id}&state=${state}`).catch(() => updateStatus(false));
-}
-
-function allOff() {
-    console.log("Master Kill Switch Activated");
-    document.querySelectorAll('.card').forEach(c => c.classList.remove('on'));
-    fetch(`${ESP_IP}/alloff`).catch(() => updateStatus(false));
-}
-
-// Standard Bluetooth Request
+// Bluetooth Request
 async function scanBluetooth() {
     try {
         await navigator.bluetooth.requestDevice({ acceptAllDevices: true });
         updateStatus(true);
-    } catch (e) { console.log("BLE Cancelled"); }
+    } catch (e) {
+        console.log("BLE Blocked/Cancelled");
+    }
+}
+
+// Relay Toggles
+function toggle(id, el) {
+    const state = el.classList.toggle('on') ? '1' : '0';
+    fetch(`${IP}/relay?id=${id}&state=${state}`, { mode: 'no-cors' })
+        .catch(() => updateStatus(false));
+}
+
+// Master Kill Switch
+function allOff() {
+    document.querySelectorAll('.card').forEach(c => c.classList.remove('on'));
+    fetch(`${IP}/alloff`, { mode: 'no-cors' }).catch(() => updateStatus(false));
 }
