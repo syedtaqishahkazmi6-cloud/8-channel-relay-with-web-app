@@ -1,73 +1,130 @@
 :root {
-    --bg: #0d0f12;
-    --card: #1c1f26;
-    --neon-g: #39FF14;
-    --neon-y: #FFEA00;
+  --bg: #0d0f12;
+  --card: #1c1f26;
+  --neon-g: #39FF14;
+  --neon-y: #FFEA00;
+  --muted: #777;
 }
 
+/* Reset and mobile-friendly defaults */
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; }
+body {
+  background: var(--bg);
+  color: white;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1;
+  /* allow scrolling on very small screens */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
 
-body { background: var(--bg); color: white; font-family: sans-serif; height: 100vh; overflow: hidden; }
+.app-wrapper { display: flex; flex-direction: column; min-height: 100vh; }
 
-.app-wrapper { display: flex; flex-direction: column; height: 100vh; }
-
+/* Header */
 .hero-header {
-    height: 15vh; /* Reduced header to save space */
-    background: linear-gradient(rgba(0,0,0,0.6), var(--bg)), url('https://images.unsplash.com/photo-1558467523-46113f1fef72?w=600');
-    background-size: cover;
-    padding: 8px 12px;
+  height: auto;
+  padding: 10px 12px;
+  background: linear-gradient(rgba(0,0,0,0.6), var(--bg)), url('https://images.unsplash.com/photo-1558467523-46113f1fef72?w=600') center/cover no-repeat;
 }
-
-.header-content { display: flex; justify-content: space-between; align-items: center; }
-
+.header-content { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
 .master-off {
-    background: #ff3b3b; color: white; border: 1px solid white;
-    padding: 6px 10px; border-radius: 4px; font-weight: bold; font-size: 10px;
+  background: #ff3b3b;
+  color: white;
+  border: 1px solid rgba(255,255,255,0.12);
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 12px;
+  min-width: 64px;
 }
 
-.title-area h1 { font-size: 0.9rem; text-align: right; }
-.status-off { color: #ff3b3b; font-weight: bold; font-size: 9px; }
-.status-on { color: var(--neon-g); font-weight: bold; font-size: 9px; }
+/* Title */
+.title-area h1 { font-size: 16px; line-height: 1; text-align: right; }
+#stat { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.status-off { color: #ff3b3b; font-weight: 700; font-size: 12px; }
+.status-on { color: var(--neon-g); font-weight: 700; font-size: 12px; }
 
-.conn-bar { background: #16191f; padding: 4px 12px; display: flex; align-items: center; gap: 6px; }
-.c-btn { width: 30px; height: 30px; border-radius: 50%; border: 1px solid #444; background: none; color: white; font-size: 12px; }
-.clock { flex: 1; text-align: center; font-size: 9px; color: #888; }
+/* Connection bar */
+.conn-bar {
+  background: #16191f;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.c-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #333;
+  background: transparent;
+  color: white;
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.clock { flex: 1; text-align: center; font-size: 12px; color: #9aa0a6; }
 
-/* Fixed Grid: All buttons now fit on one screen */
+/* Grid layout responsive */
 .control-grid {
-    flex: 1;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(4, 1fr);
-    gap: 5px; /* Minimum gap */
-    padding: 8px;
-    height: 70vh; /* Controlled height */
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  padding: 10px;
+  width: 100%;
+  /* let grid grow naturally; don't force a fixed height */
+  align-content: start;
 }
 
+/* Larger screens show 4 columns */
+@media (min-width: 720px) {
+  .control-grid { grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 14px; }
+}
+
+/* Card style and smaller touch targets */
 .card {
-    background: var(--card);
-    border: 1px solid #333;
-    border-radius: 6px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.4; /* Dim when OFF */
-    transition: 0.15s ease-in-out;
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 6px;
+  gap: 6px;
+  opacity: 0.45;
+  transition: transform 120ms ease, opacity 120ms ease, border-color 120ms ease;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  min-height: 64px;
 }
 
-.card svg { width: 18px; height: 18px; fill: #555; margin-bottom: 2px; }
-.card span { font-size: 7px; color: #777; text-transform: uppercase; font-weight: bold; }
-.card .atl { font-size: 10px; font-weight: bold; color: #555; }
+/* Icon and labels */
+.card svg { width: 20px; height: 20px; fill: #6b6f75; }
+.card span { font-size: 12px; color: var(--muted); text-transform: uppercase; font-weight: 700; letter-spacing: 0.6px; }
+.card .atl { font-size: 13px; color: #6b6f75; font-weight: 800; }
 
-/* Brightness Logic: ON state is high brightness */
-.card.on { 
-    opacity: 1; 
-    border-color: var(--neon-g); 
-    background: rgba(57, 255, 20, 0.08); 
+/* Active state */
+.card.on {
+  opacity: 1;
+  transform: translateY(-2px);
+  border-color: var(--neon-g);
+  background: rgba(57,255,20,0.06);
 }
+.card.on svg { fill: var(--neon-g); filter: drop-shadow(0 0 6px rgba(57,255,20,0.12)); }
+.card.on[data-type="yellow"] { border-color: var(--neon-y); background: rgba(255,234,0,0.06); }
+.card.on[data-type="yellow"] svg { fill: var(--neon-y); filter: drop-shadow(0 0 6px rgba(255,234,0,0.12)); }
+.card.on span { color: #fff; }
 
-.card.on svg { fill: var(--neon-g); filter: drop-shadow(0 0 3px var(--neon-g)); }
-.card.on[data-type="yellow"] { border-color: var(--neon-y); background: rgba(255, 234, 0, 0.08); }
-.card.on[data-type="yellow"] svg { fill: var(--neon-y); filter: drop-shadow(0 0 3px var(--neon-y)); }
-.card.on span { color: white; }
+/* Make buttons slightly smaller on very small screens */
+@media (max-width: 360px) {
+  .c-btn { width: 32px; height: 32px; font-size: 14px; }
+  .card { padding: 8px 6px; min-height: 56px; }
+  .card span { font-size: 11px; }
+  .title-area h1 { font-size: 14px; }
+}
