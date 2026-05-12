@@ -10,25 +10,26 @@ setInterval(() => {
     document.getElementById('clock').innerText = new Date().toLocaleTimeString();
 }, 1000);
 
-// WiFi Scanner with Error Handling
+// WiFi Scanner with CORS Bypass
 async function scanWiFi() {
+    updateStatus(false);
     try {
-        const r = await fetch(`${IP}/scan-wifi`, { mode: 'no-cors' });
+        await fetch(`${IP}/scan-wifi`, { mode: 'no-cors' });
         updateStatus(true);
-        alert("WiFi Request Sent to Hardware.");
+        alert("WiFi Request Sent. Hardware responding.");
     } catch (e) {
-        updateStatus(false);
-        alert("WiFi Fail: 1. Connect to ESP32 WiFi. 2. Enable 'Insecure Content' in Site Settings.");
+        alert("SECURITY: Open Site Settings -> Allow Insecure Content.");
     }
 }
 
-// Bluetooth Request
+// Bluetooth Fix
 async function scanBluetooth() {
     try {
-        await navigator.bluetooth.requestDevice({ acceptAllDevices: true });
+        const device = await navigator.bluetooth.requestDevice({ acceptAllDevices: true });
         updateStatus(true);
+        console.log("Connected to: " + device.name);
     } catch (e) {
-        console.log("BLE Blocked/Cancelled");
+        console.log("BLE cancelled or browser unsupported.");
     }
 }
 
@@ -36,6 +37,7 @@ async function scanBluetooth() {
 function toggle(id, el) {
     const state = el.classList.toggle('on') ? '1' : '0';
     fetch(`${IP}/relay?id=${id}&state=${state}`, { mode: 'no-cors' })
+        .then(() => updateStatus(true))
         .catch(() => updateStatus(false));
 }
 
