@@ -1,6 +1,6 @@
 :root {
-    --bg: #121417;
-    --card-bg: #1e2128;
+    --bg: #0f1114;
+    --card-bg: #1a1d23;
     --border: #3a3f4b;
     --neon-g: #39FF14;
     --neon-y: #FFEA00;
@@ -8,81 +8,54 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
-body {
-    background-color: var(--bg);
-    color: white;
-    font-family: 'Inter', sans-serif;
-    height: 100vh;
-    overflow: hidden;
-}
+body { background: var(--bg); color: white; font-family: sans-serif; height: 100vh; overflow: hidden; }
 
-.app-wrapper {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-}
+.app-wrapper { display: flex; flex-direction: column; height: 100vh; }
 
 .hero-header {
-    height: 22vh;
-    background: linear-gradient(rgba(0,0,0,0.5), var(--bg)), url('https://images.unsplash.com/photo-1558467523-46113f1fef72?w=600');
+    height: 25vh;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.3), var(--bg)), url('https://images.unsplash.com/photo-1558467523-46113f1fef72?w=600');
     background-size: cover;
-    background-position: center;
-    position: relative;
-    padding: 15px;
+    padding: 20px;
 }
 
-.header-top {
-    position: relative;
-    z-index: 10;
-    display: flex;
-    justify-content: flex-end;
-}
+.header-top { display: flex; justify-content: flex-end; margin-bottom: 10px; }
 
-/* New Header Button Style */
+/* Fixed ALL OFF Button - High Visibility */
 .header-off-btn {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid white;
+    background: #ff3333; /* Solid Red for visibility */
+    border: 2px solid white;
     color: white;
-    padding: 6px 15px;
-    border-radius: 20px;
-    font-size: 10px;
+    padding: 10px 20px;
+    border-radius: 8px;
     font-weight: bold;
-    letter-spacing: 1px;
+    font-size: 14px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     cursor: pointer;
+    z-index: 100;
 }
 
-.header-main { text-align: center; margin-top: 10px; }
-.status-text { color: #ff4444; font-weight: bold; }
+.header-main h1 { font-size: 1.4rem; text-shadow: 2px 2px 4px black; margin-bottom: 5px; }
+.status-off { color: #ff3333; font-weight: bold; }
+.status-on { color: var(--neon-g); font-weight: bold; }
 
-.conn-bar {
-    background: #1a1c22;
-    padding: 10px 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
+.conn-bar { background: #1a1d23; padding: 10px; display: flex; align-items: center; gap: 10px; }
+.c-btn { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--border); background: none; color: white; }
+.clock { flex: 1; text-align: center; font-size: 12px; font-weight: bold; border: 1px solid var(--border); border-radius: 5px; padding: 5px; }
 
-.c-btn {
-    width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border);
-    background: none; color: white;
-}
-
-.clock { flex: 1; border: 1px solid var(--border); padding: 5px; border-radius: 5px; font-size: 11px; text-align: center; }
-
-/* Grid layout with better mobile spacing */
 .control-grid {
     flex: 1;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(4, 1fr);
-    gap: 10px;
-    padding: 10px;
+    gap: 12px;
+    padding: 15px;
     overflow-y: auto;
 }
 
 .card {
     background: var(--card-bg);
-    border: 1.5px solid var(--border);
+    border: 2px solid var(--border);
     border-radius: 12px;
     display: flex;
     flex-direction: column;
@@ -90,12 +63,7 @@ body {
     justify-content: center;
 }
 
-.card svg { width: 30px; fill: #555; margin-bottom: 8px; }
-.card span { font-size: 10px; color: #777; font-weight: bold; text-transform: uppercase; }
-.card .atl { font-size: 16px; color: #555; font-weight: bold; }
-
-/* Active States */
-.card.on { border-color: var(--neon-g); box-shadow: 0 0 10px rgba(57,255,20,0.1); }
+.card.on { border-color: var(--neon-g); }
+.card svg { width: 35px; fill: #555; margin-bottom: 5px; }
 .card.on svg { fill: var(--neon-g); filter: drop-shadow(0 0 5px var(--neon-g)); }
-.card.on span { color: white; }
-.card.on[data-type="yellow"] svg { fill: var(--neon-y); filter: drop-shadow(0 0 5px var(--neon-y)); }
+.card span { font-size: 11px; color: #888; text-transform: uppercase; }

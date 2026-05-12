@@ -7,24 +7,23 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <div class="app-wrapper">
         <header class="hero-header">
             <div class="overlay"></div>
             <div class="header-top">
-                <!-- ALL OFF moved here for permanent visibility -->
+                <!-- High-visibility ALL OFF button -->
                 <button class="header-off-btn" onclick="allOff()">ALL OFF</button>
             </div>
             <div class="header-main">
                 <h1>Adeeb Technology Lab</h1>
-                <p id="status-display">Status ➜ <span class="status-text">Disconnected</span></p>
+                <p>Hardware Status: <span id="conn-stat" class="status-off">OFFLINE</span></p>
             </div>
         </header>
 
         <div class="conn-bar">
             <button id="ble-btn" class="c-btn" onclick="scanBluetooth()">ᛒ</button>
             <button id="wifi-btn" class="c-btn" onclick="scanWiFi()">📶</button>
-            <div class="clock" id="clock">Syncing...</div>
+            <div class="clock" id="clock">00:00:00</div>
         </div>
 
         <main class="control-grid">
@@ -62,7 +61,6 @@
             </div>
         </main>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
