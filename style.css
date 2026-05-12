@@ -11,7 +11,7 @@
 body { 
     background: var(--bg); 
     color: white; 
-    font-family: 'Inter', sans-serif; 
+    font-family: sans-serif; 
     margin: 0; 
     overflow: hidden; 
 }
@@ -23,7 +23,6 @@ body {
     padding: 15px;
 }
 
-/* Connection Hub */
 .connection-hub {
     background: var(--card);
     padding: 15px;
@@ -46,7 +45,7 @@ body {
     transition: 0.3s;
 }
 
-/* Active Indicator States */
+/* Working Status Colors */
 .wifi-on { color: var(--wifi-cyan); text-shadow: 0 0 8px var(--wifi-cyan); }
 .bt-on { color: var(--bt-blue); text-shadow: 0 0 8px var(--bt-blue); }
 
@@ -59,11 +58,11 @@ body {
     color: white;
     font-weight: bold;
     cursor: pointer;
+    background: #333;
 }
-.bt { background: #333; border: 1px solid var(--bt-blue); }
-.wifi { background: #333; border: 1px solid var(--wifi-cyan); }
+.bt { border: 1px solid var(--bt-blue); }
+.wifi { border: 1px solid var(--wifi-cyan); }
 
-/* Control Grid */
 .control-grid {
     flex-grow: 1;
     display: grid;
@@ -81,16 +80,11 @@ body {
     align-items: center;
     justify-content: center;
     padding: 10px;
-    transition: 0.2s;
 }
 
 .relay-node svg { width: 30px; height: 30px; fill: var(--dim); margin-bottom: 5px; }
-.relay-node span { font-size: 0.7rem; color: var(--dim); font-weight: bold; }
-
-/* Active Relay State */
 .relay-node.active { border-color: var(--active-neon); box-shadow: 0 0 10px rgba(57, 255, 20, 0.3); }
-.relay-node.active svg { fill: var(--active-glow); filter: drop-shadow(0 0 5px var(--active-glow)); }
-.relay-node.active span { color: white; }
+.relay-node.active svg { fill: var(--active-glow); }
 
 .master-kill {
     width: 100%;

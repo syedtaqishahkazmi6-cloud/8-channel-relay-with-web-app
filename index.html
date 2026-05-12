@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="app-container">
-        <!-- Top Connection Hub -->
+        <!-- Functional Connection Hub -->
         <header class="connection-hub">
             <div class="status-indicators">
                 <div id="wifi-status" class="status-node">🌐 Wi-Fi</div>
@@ -16,18 +16,18 @@
             </div>
             <div class="action-buttons">
                 <button id="btConnect" class="control-btn bt">Connect BT</button>
-                <button onclick="checkWifi()" class="control-btn wifi">Refresh Wi-Fi</button>
+                <!-- This button now actively verifies the Wi-Fi handshake -->
+                <button onclick="connectToESP32Wifi()" class="control-btn wifi">Connect Wi-Fi</button>
             </div>
             <p id="main-status">System: <span class="offline">Offline</span></p>
             <div class="time-display" id="clock">00:00:00</div>
         </header>
 
-        <!-- Functional Grid -->
+        <!-- Relay Control Grid -->
         <main class="control-grid" id="relayGrid">
-            <!-- Injected by JavaScript -->
+            <!-- Buttons injected via JS -->
         </main>
 
-        <!-- Safety Footer -->
         <footer class="bottom-bar">
             <button class="master-kill" onclick="allOff()">⚠️ MASTER ALL OFF</button>
         </footer>

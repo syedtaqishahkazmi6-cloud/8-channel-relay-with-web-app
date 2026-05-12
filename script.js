@@ -2,6 +2,7 @@ const SERVICE_UUID = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
 const CHARACTERISTIC_UUID = "beb5483e-36e1-4688-b7f5-ea07361b26a8";
 let bleChar;
 
+// Device configurations
 const devices = [
     { id: 1, name: "Light", icon: '<path d="M9 21h6v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/>' },
     { id: 2, name: "Fan", icon: '<path d="M12 12c0-3 2.5-5.5 5.5-5.5S23 9 23 12H12zm0 0c0 3-2.5 5.5-5.5 5.5S1 15 1 12h11zm0 0c-3 0-5.5-2.5-5.5-5.5S9 1 12 1v11zm0 0c3 0 5.5 2.5 5.5 5.5S15 23 12 23V12z"/>' },
@@ -13,7 +14,6 @@ const devices = [
     { id: 8, name: "LED Name", icon: '<path d="M7 19h10v2H7zM5 3h14c1.1 0 2 .9 2 2v11c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2z"/>' }
 ];
 
-// Setup Grid
 const grid = document.getElementById('relayGrid');
 devices.forEach(d => {
     const btn = document.createElement('div');
@@ -24,7 +24,7 @@ devices.forEach(d => {
     grid.appendChild(btn);
 });
 
-// Bluetooth Logic
+// Bluetooth Handshake
 document.getElementById('btConnect').onclick = async () => {
     try {
         const device = await navigator.bluetooth.requestDevice({
@@ -37,24 +37,25 @@ document.getElementById('btConnect').onclick = async () => {
         
         document.getElementById('bt-status').classList.add('bt-on');
         document.getElementById('main-status').innerHTML = 'System: <span style="color:lime">BT Connected</span>';
-        
-        device.addEventListener('gattserverdisconnected', () => {
-            document.getElementById('bt-status').classList.remove('bt-on');
-            document.getElementById('main-status').innerHTML = 'System: <span style="color:red">Disconnected</span>';
-        });
-    } catch (e) { console.log("BT Failed"); }
+    } catch (e) { console.log("BT Connection Cancelled/Failed"); }
 };
 
-// Wi-Fi Status Logic
-async function checkWifi() {
+// Wi-Fi Verification Logic
+async function connectToESP32Wifi() {
+    const statusText = document.getElementById('main-status');
+    const wifiNode = document.getElementById('wifi-status');
+    statusText.innerHTML = 'System: <span style="color:orange">Pinging ESP32...</span>';
+
     try {
-        await fetch(`http://192.168.4.1/status`, { mode: 'no-cors' });
-        document.getElementById('wifi-status').classList.add('wifi-on');
-    } catch (e) {
-        document.getElementById('wifi-status').classList.remove('wifi-on');
+        await fetch(`http://192.168.4.1/status`, { mode: 'no-cors', cache: 'no-cache' });
+        wifiNode.classList.add('wifi-on');
+        statusText.innerHTML = 'System: <span style="color:cyan">Wi-Fi Verified</span>';
+    } catch (error) {
+        wifiNode.classList.remove('wifi-on');
+        statusText.innerHTML = 'System: <span style="color:red">Connect to ESP32-AP first</span>';
+        alert("Please ensure your phone is connected to the ESP32 Wi-Fi network in your settings.");
     }
 }
-setInterval(checkWifi, 5000);
 
 async function sendCommand(id) {
     const el = document.getElementById(`r-${id}`);
