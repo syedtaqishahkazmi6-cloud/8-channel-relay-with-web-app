@@ -1,128 +1,99 @@
 :root {
-    --dark: #121418;
-    --card: #2a2d34;
-    --border: #4a4e56;
-    --neon-green: #39FF14;
-    --neon-yellow: #FFEA00;
-    --text: #ffffff;
-    --dim: #555;
+    --bg: #1e2128;
+    --card-bg: #2d313a;
+    --border: #4d525d;
+    --neon-g: #39FF14;
+    --neon-y: #FFEA00;
 }
 
-* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
 body {
-    background-color: var(--dark);
-    font-family: 'Segoe UI', sans-serif;
-    color: var(--text);
+    background-color: #121417;
+    color: white;
+    font-family: sans-serif;
     height: 100vh;
-    overflow: hidden;
+    overflow: hidden; /* Prevent bouncing on mobile */
 }
 
-.app-container {
+.app-wrapper {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 100vh;
 }
 
-/* Header with Image Slot */
-.main-header {
+.hero-header {
     height: 25vh;
-    background: url('https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=600') center/cover;
+    background: url('YOUR_IMAGE_URL') center/cover;
     position: relative;
-    border-bottom: 2px solid var(--border);
-}
-
-.header-overlay {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(to top, var(--dark), transparent);
-}
-
-.header-content {
-    position: relative;
-    padding: 15px;
-    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    text-align: center;
-}
-
-.top-nav { display: flex; justify-content: space-between; font-size: 1.2rem; }
-h1 { font-size: 1.4rem; letter-spacing: 1px; }
-#conn-status { font-size: 0.9rem; margin-top: 5px; }
-.status-text { color: red; font-weight: bold; font-style: italic; }
-
-.quick-icons { display: flex; justify-content: center; gap: 25px; margin-bottom: 10px; font-size: 1.1rem; }
-
-/* Control Bar */
-.control-bar {
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    background: #1a1c22;
-}
-
-.conn-btn {
-    background: none;
-    border: 1px solid var(--border);
-    color: var(--text);
-    width: 35px; height: 35px;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-.conn-btn.active { border-color: var(--neon-green); color: var(--neon-green); box-shadow: 0 0 10px var(--neon-green); }
-
-.timestamp { flex: 1; text-align: center; font-size: 0.8rem; border: 1px solid var(--border); padding: 4px; border-radius: 5px; }
-
-/* Grid of Buttons */
-.relay-grid {
-    flex: 1;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(4, 1fr);
-    gap: 12px;
     padding: 15px;
 }
 
-.relay-card {
-    background: var(--card);
+.overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(transparent, #1e2128); }
+
+.header-nav, .header-main, .header-icons { position: relative; z-index: 2; text-align: center; }
+.status-red { color: #ff3333; font-weight: bold; font-style: italic; }
+
+.conn-bar {
+    background: #1e2128;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.c-btn {
+    width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border);
+    background: none; color: white; cursor: pointer;
+}
+
+.clock { flex: 1; border: 1px solid var(--border); padding: 5px; border-radius: 5px; font-size: 12px; text-align: center; }
+
+/* Grid Fix */
+.control-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* 3 columns to match reference */
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px;
+    padding: 15px;
+}
+
+.card {
+    background: var(--card-bg);
     border: 2px solid var(--border);
     border-radius: 12px;
     display: flex;
-    justify-content: center;
     align-items: center;
-    cursor: pointer;
+    justify-content: center;
     transition: 0.3s;
 }
 
-.relay-card svg { width: 45px; height: 45px; fill: var(--dim); transition: 0.3s; }
-.text-icon { color: var(--dim); font-weight: bold; font-size: 1.2rem; }
+.card svg { width: 50%; fill: #666; transition: 0.3s; }
+.card .atl { color: #666; font-weight: bold; font-size: 1.2rem; }
 
-/* Bright Logic */
-.relay-card.on {
-    border-color: var(--neon-green);
-    box-shadow: 0 0 15px rgba(57, 255, 20, 0.2);
+/* Glowing States */
+.card.on[data-type="green"] { border-color: var(--neon-g); box-shadow: 0 0 15px rgba(57,255,20,0.3); }
+.card.on[data-type="green"] svg, .card.on[data-type="green"] .atl { fill: var(--neon-g); color: var(--neon-g); filter: drop-shadow(0 0 5px var(--neon-g)); }
+
+.card.on[data-type="yellow"] { border-color: var(--neon-y); box-shadow: 0 0 15px rgba(255,234,0,0.3); }
+.card.on[data-type="yellow"] svg { fill: var(--neon-y); filter: drop-shadow(0 0 5px var(--neon-y)); }
+
+/* Footer fix */
+.bottom-footer {
+    padding-bottom: 20px;
+    background: #1e2128;
+    display: flex;
+    justify-content: center;
 }
 
-.relay-card.on[data-type="light"] svg { fill: var(--neon-yellow); filter: drop-shadow(0 0 8px var(--neon-yellow)); }
-.relay-card.on[data-type="fan"] svg, 
-.relay-card.on[data-type="hw"] svg, 
-.relay-card.on[data-type="studio"] svg,
-.relay-card.on[data-type="classroom"] svg,
-.relay-card.on[data-type="printer"] svg { fill: var(--neon-green); filter: drop-shadow(0 0 8px var(--neon-green)); }
-.relay-card.on .text-icon { color: var(--neon-green); text-shadow: 0 0 8px var(--neon-green); }
-
-/* Master Footer */
-.main-footer { padding: 15px; background: #1a1c22; text-align: center; }
-.all-off-btn {
-    background: #2a2d34;
-    border: 1px solid var(--border);
-    color: var(--text);
-    padding: 8px 30px;
-    border-radius: 20px;
-    font-weight: bold;
-    letter-spacing: 2px;
+.all-off-pill {
+    width: 160px; height: 45px; border-radius: 25px; border: 2px solid white;
+    display: flex; align-items: center; justify-content: space-between; padding: 0 5px 0 20px;
+    font-weight: bold; letter-spacing: 1px;
 }
+
+.toggle-circle { width: 35px; height: 35px; background: white; border-radius: 50%; }

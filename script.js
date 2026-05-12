@@ -1,46 +1,43 @@
-// Function to update the clock
-function updateTime() {
-    const now = new Date();
-    document.getElementById('timer').innerText = now.toLocaleString();
-}
-setInterval(updateTime, 1000);
+// Clock Function
+setInterval(() => {
+    document.getElementById('clock').innerText = new Date().toLocaleString();
+}, 1000);
 
-// 1. Relay Toggle Logic
-function toggleRelay(id, element) {
-    const isActivating = !element.classList.contains('on');
-    
-    // Immediate Visual Feedback (Brighten/Dim)
-    element.classList.toggle('on');
-    
-    // ESP32 Communication
-    const state = isActivating ? '1' : '0';
-    fetch(`/relay?id=${id}&state=${state}`)
-        .then(res => console.log(`Relay ${id} toggled`))
-        .catch(err => {
-            console.error("Hardware Unreachable");
-            // Optional: element.classList.remove('on'); // Revert if failed
+// 1. Bluetooth Scan (Native Browser Scanner)
+async function scanBluetooth() {
+    try {
+        const device = await navigator.bluetooth.requestDevice({
+            acceptAllDevices: true
         });
+        document.getElementById('ble-btn').style.borderColor = "#39FF14";
+        document.querySelector('.status-red').innerText = "Connected (BLE)";
+        document.querySelector('.status-red').style.color = "#39FF14";
+    } catch (err) {
+        console.log("User cancelled scan or browser lacks BLE support");
+    }
 }
 
-// 2. WiFi/BLE Toggle Logic
-function toggleConnection(type) {
-    const btn = document.getElementById(type + '-btn');
-    const isConnecting = !btn.classList.contains('active');
-    
-    btn.classList.toggle('active');
-    
-    const endpoint = isConnecting ? `/${type}-on` : `/${type}-off`;
-    fetch(endpoint).then(() => {
-        document.querySelector('.status-text').innerText = isConnecting ? "Connected" : "Disconnect";
-        document.querySelector('.status-text').style.color = isConnecting ? "#39FF14" : "red";
-    });
+// 2. WiFi Scan (Triggers ESP32 to scan networks)
+function scanWiFi() {
+    fetch('/scan-wifi')
+    .then(res => res.json())
+    .then(networks => {
+        alert("Found " + networks.length + " WiFi Networks. Check ESP32 Serial.");
+        document.getElementById('wifi-btn').style.borderColor = "#39FF14";
+    })
+    .catch(() => alert("Connect to ESP32 Hotspot first!"));
 }
 
-// 3. Master Off Logic
-function masterOff() {
+// 3. Relay Toggles
+function toggle(id, el) {
+    el.classList.toggle('on');
+    const state = el.classList.contains('on') ? '1' : '0';
+    fetch(`/relay?id=${id}&state=${state}`).catch(e => console.log("Offline"));
+}
+
+// 4. All Off
+function allOff() {
     fetch('/alloff').then(() => {
-        const cards = document.querySelectorAll('.relay-card');
-        cards.forEach(card => card.classList.remove('on'));
-        console.log("All systems dimmed.");
+        document.querySelectorAll('.card').forEach(c => c.classList.remove('on'));
     });
 }
