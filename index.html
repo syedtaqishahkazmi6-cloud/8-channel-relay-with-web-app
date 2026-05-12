@@ -1,41 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Adeeb Tech Lab</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>8-Channel Control Hub</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="app-wrapper">
-    <header class="hero-header">
-      <div class="header-content">
-        <button class="master-off" id="masterOffBtn">ALL OFF</button>
-        <div class="title-area">
-          <h1>Adeeb Tech Lab</h1>
-          <p id="stat">Status: <span class="status-off">OFFLINE</span></p>
-        </div>
-      </div>
-    </header>
+    <div class="app-container">
+        <!-- Top Connection Hub -->
+        <header class="connection-hub">
+            <div class="status-indicators">
+                <div id="wifi-status" class="status-node">🌐 Wi-Fi</div>
+                <div id="bt-status" class="status-node">ᛒ Bluetooth</div>
+            </div>
+            <div class="action-buttons">
+                <button id="btConnect" class="control-btn bt">Connect BT</button>
+                <button onclick="checkWifi()" class="control-btn wifi">Refresh Wi-Fi</button>
+            </div>
+            <p id="main-status">System: <span class="offline">Offline</span></p>
+            <div class="time-display" id="clock">00:00:00</div>
+        </header>
 
-    <div class="conn-bar">
-      <button id="ble-btn" class="c-btn" title="Bluetooth">ᛒ</button>
-      <button id="wifi-btn" class="c-btn" title="WiFi">📶</button>
-      <div class="clock" id="clock">00:00:00</div>
+        <!-- Functional Grid -->
+        <main class="control-grid" id="relayGrid">
+            <!-- Injected by JavaScript -->
+        </main>
+
+        <!-- Safety Footer -->
+        <footer class="bottom-bar">
+            <button class="master-kill" onclick="allOff()">⚠️ MASTER ALL OFF</button>
+        </footer>
     </div>
-
-    <main class="control-grid" id="grid">
-      <!-- Cards same as before -->
-      <div class="card" data-id="1" data-type="yellow"><span>Light 1</span></div>
-      <div class="card" data-id="2" data-type="green"><span>Fan</span></div>
-      <div class="card" data-id="3" data-type="green"><span>Hardware</span></div>
-      <div class="card" data-id="4" data-type="green"><span>Studio</span></div>
-      <div class="card" data-id="5" data-type="green"><span>Classroom</span></div>
-      <div class="card" data-id="6" data-type="yellow"><span>Light 2</span></div>
-      <div class="card" data-id="7" data-type="green"><span>Printer</span></div>
-      <div class="card" data-id="8" data-type="green"><span>ATL LED</span></div>
-    </main>
-  </div>
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

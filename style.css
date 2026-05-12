@@ -1,73 +1,103 @@
 :root {
-  --bg: #0d0f12;
-  --card: #1c1f26;
-  --neon-g: #39FF14;
-  --neon-y: #FFEA00;
-  --muted: #777;
+    --bg: #0a0a0c;
+    --card: #1c1c1e;
+    --dim: #444;
+    --active-neon: #39ff14;
+    --active-glow: #fff01f;
+    --bt-blue: #0082fc;
+    --wifi-cyan: #0ea5e9;
 }
 
-body {
-  background: var(--bg);
-  color: white;
-  font-family: system-ui, sans-serif;
-  margin: 0;
+body { 
+    background: var(--bg); 
+    color: white; 
+    font-family: 'Inter', sans-serif; 
+    margin: 0; 
+    overflow: hidden; 
 }
 
-.app-wrapper { display: flex; flex-direction: column; min-height: 100vh; }
-
-/* Header */
-.hero-header { padding: 10px; background: #111; }
-.header-content { display: flex; justify-content: space-between; align-items: center; }
-.master-off { padding: 10px 14px; font-size: 14px; border-radius: 6px; background: #ff3b3b; color: #fff; }
-
-/* Connection bar */
-.conn-bar { display: flex; align-items: center; gap: 12px; padding: 10px; background: #16191f; }
-.c-btn {
-  width: 48px; height: 48px;
-  border-radius: 50%;
-  border: 1px solid #333;
-  background: transparent;
-  color: white;
-  font-size: 20px;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.2s ease;
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 15px;
 }
-.c-btn.active {
-  border-color: var(--neon-g);
-  background: rgba(57,255,20,0.1);
-  color: var(--neon-g);
-  box-shadow: 0 0 8px var(--neon-g);
-}
-.c-btn.dim {
-  opacity: 0.5;
-}
-.clock { flex: 1; text-align: center; font-size: 14px; color: #aaa; }
 
-/* Grid */
+/* Connection Hub */
+.connection-hub {
+    background: var(--card);
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid #333;
+    text-align: center;
+}
+
+.status-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 12px;
+}
+
+.status-node {
+    font-size: 0.8rem;
+    color: var(--dim);
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+/* Active Indicator States */
+.wifi-on { color: var(--wifi-cyan); text-shadow: 0 0 8px var(--wifi-cyan); }
+.bt-on { color: var(--bt-blue); text-shadow: 0 0 8px var(--bt-blue); }
+
+.action-buttons { display: flex; gap: 10px; margin-bottom: 8px; }
+.control-btn {
+    flex: 1;
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+.bt { background: #333; border: 1px solid var(--bt-blue); }
+.wifi { background: #333; border: 1px solid var(--wifi-cyan); }
+
+/* Control Grid */
 .control-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  padding: 12px;
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 15px 0;
 }
-.card {
-  background: var(--card);
-  border: 1px solid #333;
-  border-radius: 10px;
-  min-height: 100px; /* bigger buttons */
-  font-size: 16px;
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0.5;
-  transition: 0.2s ease;
+
+.relay-node {
+    background: var(--card);
+    border: 2px solid var(--dim);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    transition: 0.2s;
 }
-.card.on {
-  opacity: 1;
-  border-color: var(--neon-g);
-  background: rgba(57,255,20,0.1);
-  box-shadow: 0 0 8px var(--neon-g);
-}
-.card.on[data-type="yellow"] {
-  border-color: var(--neon-y);
-  background: rgba(255,234,0,0.1);
-  box-shadow: 0 0 8px var(--neon-y);
+
+.relay-node svg { width: 30px; height: 30px; fill: var(--dim); margin-bottom: 5px; }
+.relay-node span { font-size: 0.7rem; color: var(--dim); font-weight: bold; }
+
+/* Active Relay State */
+.relay-node.active { border-color: var(--active-neon); box-shadow: 0 0 10px rgba(57, 255, 20, 0.3); }
+.relay-node.active svg { fill: var(--active-glow); filter: drop-shadow(0 0 5px var(--active-glow)); }
+.relay-node.active span { color: white; }
+
+.master-kill {
+    width: 100%;
+    background: #ff4444;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 10px;
+    font-weight: bold;
 }
