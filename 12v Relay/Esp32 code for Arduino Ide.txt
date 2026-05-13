@@ -1,0 +1,55 @@
+#include <WiFi.h>
+#include <WebServer.h>
+#include <BLEDevice.h>
+#include <BLEServer.h>
+
+const int relayPins[] = {13, 12, 14, 27, 26, 25, 33, 32};
+WebServer server(80);
+
+// BLE Setup
+#define SERVICE_UUID "4fafc201-1fb5-459e-8fcc-c5c9c331914b"
+#define CHAR_UUID    "beb5483e-36e1-4688-b7f5-ea07361b26a8"
+
+void toggleRelay(int id) {
+    int idx = id - 1;
+    if (idx >= 0 && idx < 8) {
+        digitalWrite(relayPins[idx], !digitalRead(relayPins[idx]));
+        Serial.printf("Relay %d toggled\n", id);
+    }
+}
+
+class MyBLECallbacks: public BLECharacteristicCallbacks {
+    void onWrite(BLECharacteristic *pChar) {
+        std::string val = pChar->getValue();
+        if (val.length() > 0) toggleRelay((int)val[0]);
+    }
+};
+
+void setup() {
+    Serial.begin(115200);
+    for(int i=0; i<8; i++) {
+        pinMode(relayPins[i], OUTPUT);
+        digitalWrite(relayPins[i], HIGH); // Most relays are Active Low
+    }
+
+    // 1. Setup Wi-Fi (Access Point Mode)
+    WiFi.softAP("ESP32-8Channel-WiFi", "12345678");
+    server.on("/toggle", []() {
+        if (server.hasArg("id")) toggleRelay(server.arg("id").toInt());
+        server.send(200, "text/plain", "OK");
+    });
+    server.begin();
+
+    // 2. Setup Bluetooth
+    BLEDevice::init("ESP32-8Channel");
+    BLEServer *pServer = BLEDevice::createServer();
+    BLEService *pService = pServer->createService(SERVICE_UUID);
+    BLECharacteristic *pChar = pService->createCharacteristic(CHAR_UUID, BLECharacteristic::PROPERTY_WRITE);
+    pChar->setCallbacks(new MyBLECallbacks());
+    pService->start();
+    pServer->getAdvertising()->start();
+}
+
+void loop() {
+    server.handleClient();
+}

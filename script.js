@@ -44,16 +44,24 @@ document.getElementById('btConnect').onclick = async () => {
 async function connectToESP32Wifi() {
     const statusText = document.getElementById('main-status');
     const wifiNode = document.getElementById('wifi-status');
-    statusText.innerHTML = 'System: <span style="color:orange">Pinging ESP32...</span>';
+    statusText.innerHTML = 'System: <span style="color:orange">Connecting to ESP32...</span>';
 
     try {
-        await fetch(`http://192.168.4.1/status`, { mode: 'no-cors', cache: 'no-cache' });
+        // Try direct connection first
+        const response = await fetch(`http://192.168.4.1/status`, { 
+            mode: 'no-cors', 
+            cache: 'no-cache',
+            signal: AbortSignal.timeout(5000)
+        });
         wifiNode.classList.add('wifi-on');
-        statusText.innerHTML = 'System: <span style="color:cyan">Wi-Fi Verified</span>';
+        statusText.innerHTML = 'System: <span style="color:cyan">Wi-Fi Connected</span>';
     } catch (error) {
         wifiNode.classList.remove('wifi-on');
-        statusText.innerHTML = 'System: <span style="color:red">Connect to ESP32-AP first</span>';
-        alert("Please ensure your phone is connected to the ESP32 Wi-Fi network in your settings.");
+        if (error.name === 'TypeError' || error.message.includes('fetch')) {
+            statusText.innerHTML = 'System: <span style="color:orange">Enable HTTP or use HTTP mode</span>';
+        } else {
+            statusText.innerHTML = 'System: <span style="color:red">Connect to ESP32-AP Wi-Fi first</span>';
+        }
     }
 }
 
