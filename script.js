@@ -80,4 +80,10 @@ function allOff() {
     }
 }
 
+function exitApp() {
+    if (confirm('Are you sure you want to exit?')) {
+        window.close();
+    }
+}
+
 setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }, 1000);

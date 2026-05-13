@@ -20,15 +20,15 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    padding: clamp(8px, 2vw, 20px);
+    padding: clamp(4px, 1.5vw, 15px);
     max-width: 100%;
     margin: 0 auto;
 }
 
 .connection-hub {
     background: var(--card);
-    padding: clamp(10px, 2vw, 20px);
-    border-radius: clamp(8px, 2vw, 16px);
+    padding: clamp(6px, 1.5vw, 15px);
+    border-radius: clamp(6px, 1.5vw, 12px);
     border: 1px solid #333;
     text-align: center;
 }
@@ -36,12 +36,12 @@ body {
 .status-indicators {
     display: flex;
     justify-content: center;
-    gap: clamp(10px, 3vw, 30px);
-    margin-bottom: clamp(8px, 2vw, 15px);
+    gap: clamp(8px, 2vw, 20px);
+    margin-bottom: clamp(5px, 1.5vw, 10px);
 }
 
 .status-node {
-    font-size: clamp(0.7rem, 2vw, 1rem);
+    font-size: clamp(0.6rem, 1.5vw, 0.85rem);
     color: var(--dim);
     font-weight: bold;
     transition: 0.3s;
@@ -53,20 +53,20 @@ body {
 
 .action-buttons { 
     display: flex; 
-    gap: clamp(6px, 2vw, 15px); 
-    margin-bottom: clamp(6px, 2vw, 12px); 
+    gap: clamp(4px, 1.5vw, 10px); 
+    margin-bottom: clamp(4px, 1.5vw, 8px); 
 }
 
 .control-btn {
     flex: 1;
-    padding: clamp(6px, 1.5vw, 14px);
-    border-radius: clamp(4px, 1vw, 8px);
+    padding: clamp(4px, 1.2vw, 10px);
+    border-radius: clamp(3px, 0.8vw, 6px);
     border: none;
     color: white;
     font-weight: bold;
     cursor: pointer;
     background: #333;
-    font-size: clamp(0.7rem, 2vw, 1rem);
+    font-size: clamp(0.6rem, 1.5vw, 0.85rem);
 }
 .bt { border: 1px solid var(--bt-blue); }
 .wifi { border: 1px solid var(--wifi-cyan); }
@@ -74,34 +74,34 @@ body {
 .control-grid {
     flex-grow: 1;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-    gap: clamp(6px, 2vw, 12px);
-    padding: clamp(8px, 2vw, 15px) 0;
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: clamp(4px, 1.5vw, 8px);
+    padding: clamp(5px, 1.5vw, 10px) 0;
     overflow-y: auto;
 }
 
 .relay-node {
     background: var(--card);
     border: 2px solid var(--dim);
-    border-radius: clamp(8px, 2vw, 14px);
+    border-radius: clamp(6px, 1.5vw, 10px);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: clamp(6px, 2vw, 12px);
-    min-height: clamp(60px, 15vw, 90px);
+    padding: clamp(4px, 1.5vw, 8px);
+    min-height: clamp(50px, 12vw, 70px);
     aspect-ratio: 1;
 }
 
 .relay-node svg { 
-    width: clamp(20px, 5vw, 36px); 
-    height: clamp(20px, 5vw, 36px); 
+    width: clamp(16px, 4vw, 28px); 
+    height: clamp(16px, 4vw, 28px); 
     fill: var(--dim); 
-    margin-bottom: clamp(3px, 1vw, 6px); 
+    margin-bottom: clamp(2px, 0.8vw, 4px); 
 }
 
 .relay-node span { 
-    font-size: clamp(0.65rem, 2vw, 0.9rem); 
+    font-size: clamp(0.55rem, 1.5vw, 0.75rem); 
     text-align: center;
 }
 
@@ -117,10 +117,22 @@ body {
     background: #ff4444;
     color: white;
     border: none;
-    padding: clamp(10px, 2.5vw, 18px);
-    border-radius: clamp(8px, 2vw, 12px);
+    padding: clamp(8px, 2vw, 14px);
+    border-radius: clamp(6px, 1.5vw, 10px);
     font-weight: bold;
-    font-size: clamp(0.8rem, 2.5vw, 1.1rem);
+    font-size: clamp(0.7rem, 2vw, 0.95rem);
+}
+
+.exit-btn {
+    background: #666;
+    color: white;
+    border: none;
+    padding: clamp(4px, 1.2vw, 8px);
+    border-radius: clamp(3px, 0.8vw, 6px);
+    font-weight: bold;
+    cursor: pointer;
+    font-size: clamp(0.6rem, 1.5vw, 0.85rem);
+    margin-top: clamp(4px, 1.5vw, 8px);
 }
 
 /* Responsive Grid Adjustments */
