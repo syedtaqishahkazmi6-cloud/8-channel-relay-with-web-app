@@ -13,7 +13,7 @@ body {
     color: white; 
     font-family: sans-serif; 
     margin: 0; 
-    overflow: hidden; 
+    overflow-x: hidden; 
 }
 
 .app-container {
@@ -74,7 +74,7 @@ body {
 .control-grid {
     flex-grow: 1;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
     gap: clamp(4px, 1.5vw, 8px);
     padding: clamp(5px, 1.5vw, 10px) 0;
     overflow-y: auto;
@@ -88,16 +88,16 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: clamp(4px, 1.5vw, 8px);
-    min-height: clamp(50px, 12vw, 70px);
+    padding: clamp(6px, 1.5vw, 10px);
+    min-height: clamp(60px, 12vw, 80px);
     aspect-ratio: 1;
 }
 
 .relay-node svg { 
-    width: clamp(16px, 4vw, 28px); 
-    height: clamp(16px, 4vw, 28px); 
+    width: clamp(18px, 4vw, 30px); 
+    height: clamp(18px, 4vw, 30px); 
     fill: var(--dim); 
-    margin-bottom: clamp(2px, 0.8vw, 4px); 
+    margin-bottom: clamp(3px, 0.8vw, 5px); 
 }
 
 .relay-node span { 
@@ -112,27 +112,34 @@ body {
 
 .relay-node.active svg { fill: var(--active-glow); }
 
-.master-kill {
-    width: 100%;
+.bottom-bar {
+    display: flex;
+    gap: clamp(8px, 2vw, 12px);
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    margin-top: clamp(10px, 2vw, 14px);
+}
+
+.bottom-bar button {
+    flex: 1;
+    min-width: 0;
+}
+
+.master-kill,
+.exit-btn {
     background: #ff4444;
     color: white;
     border: none;
-    padding: clamp(8px, 2vw, 14px);
-    border-radius: clamp(6px, 1.5vw, 10px);
+    padding: clamp(10px, 2vw, 14px);
+    border-radius: clamp(8px, 1.5vw, 12px);
     font-weight: bold;
-    font-size: clamp(0.7rem, 2vw, 0.95rem);
+    cursor: pointer;
+    font-size: clamp(0.75rem, 1.8vw, 1rem);
 }
 
 .exit-btn {
-    background: #666;
-    color: white;
-    border: none;
-    padding: clamp(4px, 1.2vw, 8px);
-    border-radius: clamp(3px, 0.8vw, 6px);
-    font-weight: bold;
-    cursor: pointer;
-    font-size: clamp(0.6rem, 1.5vw, 0.85rem);
-    margin-top: clamp(4px, 1.5vw, 8px);
+    margin-top: 0;
 }
 
 /* Responsive Grid Adjustments */
